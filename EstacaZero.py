@@ -1055,7 +1055,7 @@ def excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveld
         ws = wb['Comparativo entre os Métodos']
         ws.add_image(XLImage(imgAokieDecourt), 'E1')
 
-    return
+    return  "Os resultados foram exportados para a pasta no formato Excel."
 
 def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName):
 
@@ -1290,4 +1290,4 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     documento.save(fileName)
 
-    return
+    return "Os resultados foram exportados para a pasta no formato Word."
