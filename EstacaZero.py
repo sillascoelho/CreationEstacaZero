@@ -7,6 +7,8 @@ from docx import Document
 from docx.shared import Pt, Cm
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from time import sleep
+from colorama import init, Fore
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -306,6 +308,10 @@ def plotagemAoki(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, nivel
     listaPa = padm6122Aoki(listaSolos, estaca, diametro, listaNspt)
 
     profundidade = len(listaNspt) + 1
+
+    if profundidade < niveldAgua:
+
+        profundidade = niveldAgua + 1
 
     listaPaEscavadaSPonta = semResPontaEscavadaAoki(listaSolos, estaca, diametro, listaNspt)
 
@@ -893,6 +899,10 @@ def plotagemDQ(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     profundidade = len(listaNspt) + 1
 
+    if profundidade < niveldAgua:
+
+        profundidade = niveldAgua + 1
+
     listaPaEscavadaSPonta = semResPontaEscavadaDQ(listaSolos, estaca, diametro, listaNspt)
 
     listaPaEscavaCPonta = comResPontaEscavadaDQ(listaSolos, estaca, diametro, listaNspt)
@@ -986,13 +996,17 @@ def comparativoAokieDecourt(listaSolos, estaca, diametro, listaNspt):
     return dfCompararAokieDecourt
 
 
-def plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel):
+def plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua):
     
     padm_AokiVelloso = padm6122Aoki(listaSolos, estaca, diametro, listaNspt)
 
     padm_DecourtQuaresma = padm6122DQ(listaSolos, estaca, diametro, listaNspt)
 
     profundidade = len(listaNspt) + 1
+
+    if profundidade < niveldAgua:
+
+        profundidade = niveldAgua + 1
 
     fig, axs = plt.subplots(1, 2, figsize=(11, 9))
 
@@ -1050,7 +1064,7 @@ def excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveld
 
         comparativoAokieDecourt(listaSolos, estaca, diametro, listaNspt).to_excel(writer, sheet_name='Comparativo entre os Métodos', index= False)
 
-        imgAokieDecourt = plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel)
+        imgAokieDecourt = plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua)
         wb = writer.book
         ws = wb['Comparativo entre os Métodos']
         ws.add_image(XLImage(imgAokieDecourt), 'E1')
@@ -1233,7 +1247,7 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     space = documento.add_paragraph('')
 
-    imagemAokieDecourt = plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel)
+    imagemAokieDecourt = plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua)
 
     figura3nome = documento.add_paragraph("Figura 3: Comparativo entre Aoki Velloso e Decourt Quaresma.")
 
@@ -1291,3 +1305,93 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
     documento.save(fileName)
 
     return "Os resultados foram exportados para a pasta no formato Word."
+
+listaSolos = []
+
+listaNspt = []
+
+cota = - 1
+
+cor_azul = Fore.BLUE
+
+texto = "Bem Vindo ao Estaca Zero"
+
+print("")
+print(cor_azul + texto.center(80))
+print("")
+
+while True:
+
+    print("""Escolha o tipo de solo: 
+        
+Areia = 1                        Silte = 2                       Argila = 3
+Areia Siltosa = 12               Silte Arenoso = 21              Argila Arenosa = 31
+Areia Siltoargilosa = 13         Silte Arenoargiloso = 22        Argila Arenossiltosa = 32
+Areia Argilosa = 14              Silte Argiloso = 23             Argila Siltosa = 33
+Areia Argilossiltosa = 15        Silte Argiloarenoso = 24        Argila Siltoarenosa = 34
+    """)
+
+    tipo_solo = int(input(f"Digite o TIPO DE SOLO correspondente a cota de apoio {cota}: "))
+
+    while tipo_solo not in [1, 12, 13, 14, 15, 2, 21, 22, 23, 24, 3, 31, 32, 33, 34]:
+
+        print("Opção inválida! Por favor, escolha um tipo de solo válido.")
+        
+        tipo_solo = int(input(f"Digite o TIPO DE SOLO correspondente a cota de apoio {cota}: "))
+
+    listaSolos.append(tipo_solo)
+
+    nspt_valor = int(input(f"Digite o valor NSPT correspondente a cota de apoio {cota}: "))
+
+    listaNspt.append(nspt_valor)
+
+    cota = cota - 1
+
+    print("")
+
+    finalizar = str(input("Digite 'x' para finalizar ou 'c' para continuar preenchendo:  ")).upper()
+
+    print("")
+
+    if finalizar == 'X':
+        
+        break
+
+print("""Escolha o tipo de estaca: 
+      
+    [0] Hélice Contínua   [1] Escavada   [2] Raiz   [3] Pré-Moldada   [4] Franki   [5] Ômega   [6] Metálica
+      """)
+
+estaca_opcoes = {
+    '0': "Hélice Contínua",
+    '1': "Escavada",
+    '2': "Raiz",
+    '3': "Pré-Moldada",
+    '4': "Franki",
+    '5': "Ômega",
+    '6': "Metálica"
+}
+
+estaca = input("Tipo de estaca: ")
+
+while estaca not in estaca_opcoes:
+
+    print("Dado inválido. Por favor, escolha uma opção válida.")
+
+    estaca = input("Tipo de estaca: ")
+
+estaca = estaca_opcoes[estaca]
+
+diametro = float(input("Diâmetro da estaca (em centímetros): ")) / 100
+
+cargaAdmissivel = float(input("Carga admissível esperada (em kN): "))
+
+niveldAgua = float(input("Nível da água (em metros): "))
+
+print(excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados.xlsx"))
+
+print(wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados.docx"))
+
+print("Programa finalizado. Os resultados foram exportados para a pasta do programa.")
+
+sleep(8)
