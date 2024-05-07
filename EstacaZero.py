@@ -1044,7 +1044,7 @@ def plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmis
 
 def excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName):
 
-    with pd.ExcelWriter(fileName, engine='openpyxl') as writer:
+    with pd.ExcelWriter(fileName + '.xlsx', engine='openpyxl') as writer:
 
         resultadosAoki(listaSolos, estaca, diametro, listaNspt).to_excel(writer, sheet_name='Resultados Aoki Velloso', index=False)
 
@@ -1302,9 +1302,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     tabelaAokieDecourt.alignment = WD_TABLE_ALIGNMENT.CENTER
 
-    documento.save(fileName)
+    documento.save(fileName + '.docx')
 
-    return "Os resultados foram exportados para a pasta no formato Word."
+    return f"Os resultados foram exportados para a pasta no formato Word."
 
 listaSolos = []
 
@@ -1388,9 +1388,9 @@ cargaAdmissivel = float(input("Carga admissível esperada (em kN): "))
 
 niveldAgua = float(input("Nível da água (em metros): "))
 
-print(excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados.xlsx"))
+print(excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados"))
 
-print(wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados.docx"))
+print(wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, "Resultados"))
 
 print("Programa finalizado. Os resultados foram exportados para a pasta do programa.")
 
