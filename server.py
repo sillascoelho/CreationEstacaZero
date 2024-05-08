@@ -1,4 +1,4 @@
-from EstacaZero import wordExport
+from EstacaZero import wordExport, plotagemAoki, plotagemDQ, plotCompararAokieDecourt, resultadosAoki, resultadosDQ, comparativoAokieDecourt
 from flask import Flask, render_template, request, send_file
 
 app = Flask(__name__)
@@ -8,6 +8,39 @@ app = Flask(__name__)
 def estacaZero():
 
     return render_template('main.html')
+
+"""
+@app.rout('/tabelas', methods=['POST'])
+
+def tabelas():
+        
+        resultadosAoki(listaSolos, tipoEstaca, diametroEstaca, listaNspt) #Vai retornar o Dataframe de Aoki
+        resultadosDQ(listaSolos, tipoEstaca, diametroEstaca, listaNspt) #Vai retornar o Dataframe do Decourt Quaresma
+        comparativoAokieDecourt(listaSolos, tipoEstaca, diametroEstaca, listaNspt) #Vai retornar o Dataframe do Comparativo entre os métodos
+     
+        return
+"""
+
+"""
+@app.route('/graficos', methods=['POST'])
+
+def plotar():
+        
+        plotagemAoki(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retorar a imagem do gráfico de Aoki Velloso em bytes
+
+        plotagemDQ(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua)  #Vai retorar a imagem do gráfico de Decourt Quaresma em bytes
+
+        plotCompararAokieDecourt(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retorar a imagem do gráfico do Comparativo em bytes
+        
+        return 
+"""
+
+@app.route('/retornar', methods=['POST'])
+
+def retornar():
+
+    return  render_template('main.html') #Criei, para tentar implementar um botão que retorna para a página main.html na página resultados.html 
+
 
 @app.route('/submitEstaca', methods=['POST', 'GET'])
 

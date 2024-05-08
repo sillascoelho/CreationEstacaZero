@@ -74,17 +74,18 @@
     <div class="resultadosGeral">
         <div class="resGeral"> 
             <table>
-                <!-- Insira a tabela aqui -->
+                <!-- Inserir a tabela aqui -->
             </table>
         </div>
         <div class="resGeral"> 
-            <!-- Insira os gráficos aqui -->
+            <!-- Inserir os gráficos aqui -->
             <canvas id="myChart" width="400" height="400"></canvas>
         </div>
     </div>
-    
+    <form id="estacaForm" action="/retornar" method="post">
+        <input type="submit" value="Voltar">
+    </form>
     <form id="estacaForm" action="/submitEstaca" method="post">
-        <input type="submit" value="Voltar à Edição">
         <input type="submit" value="Baixar Resultados">
     </form>
 </div>
