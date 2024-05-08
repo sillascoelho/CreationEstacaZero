@@ -97,7 +97,11 @@
                       
     </div>
 
-    <form id="estacaForm">
+    <form id="estacaForm" action="/submitEstaca" method="post">
+        <div class="form-group">
+            <label for="fileName">Nome do arquivo:</label>
+            <input type="text" id="fileName" name="fileName" placeholder="Digite um nome para o arquivo">
+        </div>
         <div class="form-group">
             <label for="listaSolos">Lista de Solos:</label>
             <input type="text" id="listaSolos" name="listaSolos" placeholder="Exemplo de entrada: 23, 23, 23, 23, 33, 33, 33, 33, 33, 12">
@@ -128,9 +132,9 @@
         </div>
         <div class="form-group">
             <label for="niveldAgua">Nível de Água (m):</label>
-            <input type="text" id="cargaAdmissivel" name="cargaAdmissivel" placeholder="Digite o nível de água">
+            <input type="text" id="niveldAgua" name="niveldAgua" placeholder="Digite o nível de água">
         </div>
-        <input type="submit" value="Gerar Resultados">
+        <input type="submit" value="Calcular">
     </form>
 </div>
 
