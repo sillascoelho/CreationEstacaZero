@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados - Estaca Zero</title>
+<!-- Adicionando link para o Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+    .container {
+        max-width: 1450px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #4d4d4d;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .resultadosGeral {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 10px
+    }
+    .resGeral {
+        flex: 1;
+        border: 2px solid #483D8B;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    input[type="submit"] {
+        background-color:#483D8B;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 18px;
+        width: 100%;
+        display: block;
+        transition: background-color 0.3s ease;
+        margin-bottom: 6px
+    }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2>
+        <font color="DarkSlateBlue" size="6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 10 20">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5m0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5M7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5m.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5z"/>
+            </svg>
+            Resultados Estaca Zero
+        </font>
+    </h2>
+    <div class="resultadosGeral">
+        <div class="resGeral"> 
+            <table>
+                <!-- Insira sua tabela aqui -->
+            </table>
+        </div>
+        <div class="resGeral"> 
+            <!-- Gráfico para representar os dados -->
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+    
+    <form id="estacaForm" action="/submitEstaca" method="post">
+        <input type="submit" value="Voltar à Edição">
+        <input type="submit" value="Baixar Resultados">
+    </form>
+</div>
+
+{% endblock %}
+

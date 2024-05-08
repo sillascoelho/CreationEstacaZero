@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def estacaZero():
 
-    return render_template('main.html')
+    return render_template('resultados.html')
 
 @app.route('/submitEstaca', methods=['POST', 'GET'])
 
