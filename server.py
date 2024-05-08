@@ -26,11 +26,11 @@ def tabelas():
 
 def plotar():
         
-        plotagemAoki(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retorar a imagem do gráfico de Aoki Velloso em bytes
+        plotagemAoki(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retornar a imagem do gráfico de Aoki Velloso em bytes
 
-        plotagemDQ(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua)  #Vai retorar a imagem do gráfico de Decourt Quaresma em bytes
+        plotagemDQ(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua)  #Vai retornar a imagem do gráfico de Decourt Quaresma em bytes
 
-        plotCompararAokieDecourt(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retorar a imagem do gráfico do Comparativo em bytes
+        plotCompararAokieDecourt(listaSolos, tipoEstaca, diametroEstaca, listaNspt, cargaAdmissivel, niveldAgua) #Vai retornar a imagem do gráfico do Comparativo em bytes
         
         return 
 """
