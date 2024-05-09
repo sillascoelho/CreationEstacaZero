@@ -1091,9 +1091,7 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
     dados.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
 
     paragrafo = documento.add_paragraph(f"""
-    Lista Nspt:
-                                         
-    {listaNspt}
+    Lista Nspt: {listaNspt}
     
     Tipo de Estaca: {estaca}
 

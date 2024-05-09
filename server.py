@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 
 def estacaZero():
-
+    
     return render_template('main.html')
 
 @app.route('/resultados')
@@ -16,7 +16,7 @@ def resultados():
     return render_template('resultados.html')
 
 """
-@app.rout('/tabelas', methods=['POST'])
+@app.route('/tabelas', methods=['POST'])
 
 def tabelas():
         
@@ -60,7 +60,7 @@ def submitEstaca():
         cargaAdmissivel = float(request.form.get('cargaAdmissivel'))
         niveldAgua = float(request.form.get('niveldAgua'))
         fileName = str(request.form.get('fileName'))       
-       
+        
         wordExport(listaSolos_int, tipoEstaca, diametroEstaca, listaNspt_int, cargaAdmissivel, niveldAgua, fileName)
         
         print(f"Recebido: {listaSolos_int}, {listaNspt_int}, {tipoEstaca}, {diametroEstaca}, {cargaAdmissivel}, {niveldAgua}")
@@ -68,7 +68,6 @@ def submitEstaca():
         path_memoryWord = fileName + '.docx'
 
         return send_file(path_memoryWord, as_attachment=True, download_name=path_memoryWord)
-
 
 if __name__ == '__main__':
 
