@@ -9,6 +9,12 @@ def estacaZero():
 
     return render_template('main.html')
 
+@app.route('/resultados')
+
+def resultados():
+
+    return render_template('resultados.html')
+
 """
 @app.rout('/tabelas', methods=['POST'])
 
@@ -34,13 +40,6 @@ def plotar():
         
         return 
 """
-
-@app.route('/retornar', methods=['POST'])
-
-def retornar():
-
-    return  render_template('main.html') #Criei, para tentar implementar um botão que retorna para a página main.html na página resultados.html 
-
 
 @app.route('/submitEstaca', methods=['POST', 'GET'])
 
