@@ -1,0 +1,17 @@
+Areia = 1
+Areia Siltosa = 12
+Areia Siltoargilosa = 13
+Areia Argilosa = 14
+Areia Argilossiltosa = 15
+
+Silte = 2
+Silte Arenoso = 21
+Silte Arenoargiloso = 22
+Silte Argiloso = 23
+Silte Argiloarenoso = 24
+
+Argila = 3
+Argila Arenosa = 31
+Argila Arenossiltosa = 32
+Argila Siltosa = 33
+Argila Siltoarenosa = 34       
