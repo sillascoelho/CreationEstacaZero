@@ -7,6 +7,7 @@ from docx import Document
 from docx.shared import Pt, Cm
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import Inches
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1073,36 +1074,30 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     documento = Document()
 
-    #TÍTULO
-    titulo = documento.add_heading("Resultados Aoki Velloso e Decourt Quaresma", 0)
-
+    titulo = documento.add_heading("Resultados Aoki Velloso e Decourt Quaresma", level=0)
     titulo.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-
-    titulo.style.font.size = Pt(20)
-
+    titulo.style.font.size = Pt(18)
     titulo.style.font.bold = True
 
-    #DADOS
-
     dados = documento.add_heading("Dados de Entrada", level=1)
-
     dados.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
 
-    paragrafo = documento.add_paragraph(f"""
-    Lista Nspt: {listaNspt}
-    
-    Tipo de Estaca: {estaca}
-
-    Diâmetro da Estaca: {diametro*100} cm
-
-    Carga Admissível Esperada: {cargaAdmissivel} kN
-
-    Nível d'água: {niveldAgua} m""")
-
-    paragrafo.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-
-    paragrafo.style.font.size = Pt(12)
-
+    paragrafo = documento.add_paragraph()
+    paragrafo.add_run(f"\n")
+    paragrafo.add_run("Lista Nspt: ").bold = True
+    paragrafo.add_run(f"{listaNspt}\n")
+    paragrafo.add_run(f"\n")
+    paragrafo.add_run("Tipo de Estaca: ").bold = True
+    paragrafo.add_run(f"{estaca}\n")
+    paragrafo.add_run(f"\n")
+    paragrafo.add_run("Diâmetro da Estaca: ").bold = True
+    paragrafo.add_run(f"{diametro*100} cm\n")
+    paragrafo.add_run(f"\n")
+    paragrafo.add_run("Carga Admissível Esperada: ").bold = True
+    paragrafo.add_run(f"{cargaAdmissivel} kN\n")
+    paragrafo.add_run(f"\n")
+    paragrafo.add_run("Nível de Água: ").bold = True
+    paragrafo.add_run(f"{niveldAgua} m\n")
     documento.add_page_break()
 
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1115,8 +1110,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     imagemAoki = plotagemAoki(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua)
 
-    figura1nome = documento.add_paragraph("Figura 1: Gráfico dos resultados pelo método de Aoki Velloso.")
-
+    figura1nome = documento.add_paragraph()
+    figura1nome.add_run("Figura 1: ").bold = True
+    figura1nome.add_run("Gráfico dos resultados pelo método de Aoki Velloso.")
     figura1nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
     figura1 = documento.add_picture(imagemAoki, width=Cm(15), height=Cm(15))
@@ -1129,7 +1125,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     dfAoki = resultadosAoki(listaSolos, estaca, diametro, listaNspt)
 
-    tabela1nome = documento.add_paragraph("Tabela 1: Resultados pelo método de Aoki Velloso.")
+    tabela1nome = documento.add_paragraph()
+    tabela1nome.add_run("Tabela 1: ").bold = True
+    tabela1nome.add_run("Resultados pelo método de Aoki Velloso.")
 
     tabela1nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
@@ -1180,7 +1178,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     imagemDQ = plotagemDQ(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua)
 
-    figura2nome = documento.add_paragraph("Figura 2: Gráfico dos resultados pelo método de Decourt Quaresma.")
+    figura2nome = documento.add_paragraph()
+    figura2nome.add_run("Figura 2: ").bold = True
+    figura2nome.add_run("Gráfico dos resultados pelo método de Decourt Quaresma.")
 
     figura2nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
@@ -1194,7 +1194,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     dfDQ = resultadosDQ(listaSolos, estaca, diametro, listaNspt)
 
-    tabela2nome = documento.add_paragraph("Tabela 2: Resultados pelo método de Decourt Quaresma.")
+    tabela2nome = documento.add_paragraph()
+    tabela2nome.add_run("Tabela 2: ").bold = True
+    tabela2nome.add_run("Resultados pelo método de Decourt Quaresma.")
 
     tabela2nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
@@ -1245,7 +1247,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     imagemAokieDecourt = plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua)
 
-    figura3nome = documento.add_paragraph("Figura 3: Comparativo entre Aoki Velloso e Decourt Quaresma.")
+    figura3nome = documento.add_paragraph()
+    figura3nome.add_run("Figura 3: ").bold = True
+    figura3nome.add_run("Comparativo entre Aoki Velloso e Decourt Quaresma.")
 
     figura3nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
@@ -1259,7 +1263,9 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     dfAokieDecourt = comparativoAokieDecourt(listaSolos, estaca, diametro, listaNspt)
 
-    tabela3nome = documento.add_paragraph("Tabela 3: Comparativo entre Aoki Velloso e Decourt Quaresma.")
+    tabela3nome = documento.add_paragraph()
+    tabela3nome.add_run("Tabela 3: ").bold = True
+    tabela3nome.add_run("Comparativo entre Aoki Velloso e Decourt Quaresma.")
 
     tabela3nome.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 

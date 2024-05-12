@@ -2,7 +2,6 @@ from EstacaZero import wordExport, excelExport
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from tkinter import *
 
 #ÍNICIANDO A INTERFACE
 
@@ -92,7 +91,7 @@ valorNspt_msg = tk.Label(text="Nspt da Camada: ", fg="black", bg="white", font=f
 valorNspt_msg.grid(row=7, column=0, sticky='NSEW')
 valorNspt = tk.Entry()
 valorNspt.grid(row=7, column=1, sticky='NSEW')
-
+    
 def salvar_camada():
     global cota
     global listaSolos
@@ -120,6 +119,9 @@ def salvar_camada():
     valorSolo = listaSolos_dict[escolhaSolo.get()]
     nspt_digitado = valorNspt.get()
     dados.insert(tk.END, f"Cota {cota} m, Solo: {solo_selecionado}, Nspt: {nspt_digitado}\n")
+    if not nspt_digitado.isdigit():
+        tk.messagebox.showerror("Atenção", "Por favor, insira apenas números para Nspt.")
+        return
     listaSolos.append(valorSolo)
     listaNspt.append(int(nspt_digitado))
 
@@ -136,39 +138,66 @@ def limpartudo():
     cota = -1
 
 limparCamadas = tk.Button(text="Limpar Camadas", fg='white', bg='orange', font=fonte_negrito, command=limpartudo)
-limparCamadas.grid(row=10, column=0, columnspan=2, sticky='NSEW')
+limparCamadas.grid(row=9, column=0, columnspan=2, sticky='NSEW')
 
 dados = tk.Text(width=48, height=20)
-dados.grid(row=11, columnspan=2)
+dados.grid(row=10, columnspan=2)
 
 def gerarMemorial():
-    
-    fileName = nome.get()
-    estaca = tipoEstaca.get()
-    diametro = float(diametroEstaca.get()) / 100
-    cargaAdmissivel = float(cargaAdmissivelEsperada.get())
-    niveldAgua = float(niveldeAgua.get())
 
-    wordGerado = wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
+    if (nome.get() == "" or
+        tipoEstaca.get() == "" or
+        diametroEstaca.get() == "" or
+        cargaAdmissivelEsperada.get() == "" or
+        niveldeAgua.get() == "" or
+        len(listaSolos) == 0 or
+        len(listaNspt) == 0):
 
-    messagebox.showinfo("Exportado", wordGerado)
+        messagebox.showerror("ATENÇÃO", "Por favor, preencha todos os campos obrigatórios.")
+
+    else:
+
+        fileName = nome.get()
+        estaca = tipoEstaca.get()
+        diametro = float(diametroEstaca.get()) / 100
+        cargaAdmissivel = float(cargaAdmissivelEsperada.get())
+        niveldAgua = float(niveldeAgua.get())
+
+        wordGerado = wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
+
+        messagebox.showinfo("Memorial Gerado", f"O memorial foi exportado para a mesma pasta onde o programa está localizado.\n\nNome do Arquivo: {fileName + '.docx'}")
+
+    return wordGerado
 
 exportarWord = tk.Button(text="Gerar Memorial em Word", fg='white', bg='blue', font=fonte_negrito, command=gerarMemorial)
-exportarWord.grid(row=13, column=0, columnspan=2, sticky='NSEW')
+exportarWord.grid(row=11, column=0, columnspan=2, sticky='NSEW')
 
 def gerarExcel(): 
 
-    fileName = nome.get()
-    estaca = tipoEstaca.get()
-    diametro = float(diametroEstaca.get()) / 100
-    cargaAdmissivel = float(cargaAdmissivelEsperada.get())
-    niveldAgua = float(niveldeAgua.get())
+    if (nome.get() == "" or
+        tipoEstaca.get() == "" or
+        diametroEstaca.get() == "" or
+        cargaAdmissivelEsperada.get() == "" or
+        niveldeAgua.get() == "" or
+        len(listaSolos) == 0 or
+        len(listaNspt) == 0):
+        messagebox.showerror("ATENÇÃO", "Por favor, preencha todos os campos obrigatórios.")
 
-    excelGerado = excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
+    else:
 
-    messagebox.showinfo("Exportado", excelGerado)
+        fileName = nome.get()
+        estaca = tipoEstaca.get()
+        diametro = float(diametroEstaca.get()) / 100
+        cargaAdmissivel = float(cargaAdmissivelEsperada.get())
+        niveldAgua = float(niveldeAgua.get())
+        
+        excelGerado = excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
+
+        messagebox.showinfo("Excel Gerado", f"O arquivo foi exportado para a mesma pasta onde o programa está localizado.\n\nNome do Arquivo: {fileName + '.xlsx'}")
+
+    return excelGerado
 
 exportarExcel = tk.Button(text="Exportar resultados para Excel", fg='white', bg='green', font=fonte_negrito, command=gerarExcel)
-exportarExcel.grid(row=14, column=0, columnspan=2, sticky='NSEW')
+exportarExcel.grid(row=12, column=0, columnspan=2, sticky='NSEW')
 
 estacaZero.mainloop()
