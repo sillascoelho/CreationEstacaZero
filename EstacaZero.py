@@ -6,7 +6,7 @@ from io import BytesIO
 from docx import Document
 from docx.shared import Pt, Cm
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_TAB_ALIGNMENT
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -686,6 +686,34 @@ def nsptl(listaSolos, estaca, listaNspt):
             else:
 
                 listaNsptL.append(media)
+    
+    elif estaca == "Ômega":
+
+        listaNsptL = []
+
+        cont = 0
+
+        for i in range(len(listaSolos)):  
+
+            if i == 0:
+            
+                listaNsptL.append(3)
+
+            cont = cont + 1
+
+            media = round(sum(listaNspt[0:i+1]) / cont, 2)
+            
+            if media < 3:
+
+                listaNsptL.append(3)
+
+            elif media > 50:
+
+                listaNsptL.append(50)
+
+            else:
+
+                listaNsptL.append(media)
     else:
 
         listaNsptL = []
@@ -1097,6 +1125,38 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
     paragrafo.add_run(f"\n")
     paragrafo.add_run("Nível de Água: ").bold = True
     paragrafo.add_run(f"{niveldAgua} m\n")
+
+    documento.add_heading('Recomendações', level=1)
+    space = documento.add_paragraph('')
+
+    colunas= ["Tipo de Fundação", "Executado na presença de nível d’água", "Custo", "Vibrações na execução"]
+    linhas = [
+             ["Estacas Escavadas de Peq. diâmetro", "Não", "Baixo a Médio", "Não"],
+             ["Estacas Escavadas de Gd. diâmetro", "Sim (Camisa Metálica)", "Médio a Alto", "Não"],
+             ["Estacas Pré-Moldadas", "Sim", "Baixo a Médio", "Sim"],
+             ["Estacas Franki", "Sim", "Médio a Alto", "Sim"],
+             ["Estaca Raíz", "Sim", "Alto", "Não"],
+             ["Estaca Hélice Contínua", "Sim", "Médio a Alto", "Não"],
+             ["Estaca Metálica", "Sim", "Médio a Alto", "Não"],
+             ["Estaca Ômega", "Sim", "Médio a Alto", "Não"]
+             ]   
+
+    recomendacoes = documento.add_table(rows=1, cols=len(colunas), style="Light Grid Accent 1")
+    
+    for row in recomendacoes.rows:
+        for cell in row.cells:
+            cell.width = 3000 
+
+    for i, header in enumerate(colunas):
+        recomendacoes.cell(0, i).text = header
+
+    for dados_linha in linhas:
+        linha = recomendacoes.add_row().cells
+        for i, dado in enumerate(dados_linha):
+            linha[i].text = dado
+
+    recomendacoes.alignment = WD_TABLE_ALIGNMENT.CENTER
+
     documento.add_page_break()
 
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1163,7 +1223,7 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     tabelaAoki.autofit = True
 
-    tabelaAoki.alignment = WD_TABLE_ALIGNMENT.CENTER
+    tabelaAoki.alignment = WD_TAB_ALIGNMENT.CENTER
 
     documento.add_page_break()
 
