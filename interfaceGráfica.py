@@ -114,10 +114,10 @@ def salvar_camada():
     solo_selecionado = escolhaSolo.get()
     valorSolo = listaSolos_dict[escolhaSolo.get()]
     nspt_digitado = valorNspt.get()
-    dados.insert(tk.END, f"Cota {cota} m, Solo: {solo_selecionado}, Nspt: {nspt_digitado}\n")
     if not nspt_digitado.isdigit():
         tk.messagebox.showerror("Atenção", "Por favor, insira apenas números para Nspt.")
         return
+    dados.insert(tk.END, f"Cota {cota} m, Solo: {solo_selecionado}, Nspt: {nspt_digitado}\n")
     listaSolos.append(valorSolo)
     listaNspt.append(int(nspt_digitado))
 
