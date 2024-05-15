@@ -153,10 +153,18 @@ def gerarMemorial():
     else:
 
         estaca = tipoEstaca.get()
-        diametro = float(diametroEstaca.get()) / 100
-        cargaAdmissivel = float(cargaAdmissivelEsperada.get())
-        niveldAgua = float(niveldeAgua.get())
+
+        diametro_str = diametroEstaca.get().replace(',', '.')
+        diametro = float(diametro_str) / 100
+
+        cargaAdmissivel_str = cargaAdmissivelEsperada.get().replace(',', '.')
+        cargaAdmissivel = float(cargaAdmissivel_str)
+
+        niveldAgua_str = niveldeAgua.get().replace(',', '.')
+        niveldAgua = float(niveldAgua_str)
+
         fileName = filedialog.asksaveasfilename(defaultextension=".docx", filetypes=[("Word Document", "*.docx")], initialfile="Memorial Estaca Zero")
+
         if not fileName:
             return
 
@@ -182,10 +190,18 @@ def gerarExcel():
     else:
 
         estaca = tipoEstaca.get()
-        diametro = float(diametroEstaca.get()) / 100
-        cargaAdmissivel = float(cargaAdmissivelEsperada.get())
-        niveldAgua = float(niveldeAgua.get())
+
+        diametro_str = diametroEstaca.get().replace(',', '.')
+        diametro = float(diametro_str) / 100
+
+        cargaAdmissivel_str = cargaAdmissivelEsperada.get().replace(',', '.')
+        cargaAdmissivel = float(cargaAdmissivel_str)
+
+        niveldAgua_str = niveldeAgua.get().replace(',', '.')
+        niveldAgua = float(niveldAgua_str)
+
         fileName = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel Workbook", "*.xlsx")], initialfile="Resultados Estaca Zero")
+        
         if not fileName:
             return
         

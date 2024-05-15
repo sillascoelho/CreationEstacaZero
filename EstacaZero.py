@@ -1070,7 +1070,7 @@ def plotCompararAokieDecourt(listaSolos, estaca, diametro, listaNspt, cargaAdmis
 
 def excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName):
 
-    with pd.ExcelWriter(fileName + '.xlsx', engine='openpyxl') as writer:
+    with pd.ExcelWriter(fileName, engine='openpyxl') as writer:
 
         resultadosAoki(listaSolos, estaca, diametro, listaNspt).to_excel(writer, sheet_name='Resultados Aoki Velloso', index=False)
 
@@ -1363,6 +1363,6 @@ def wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldA
 
     tabelaAokieDecourt.alignment = WD_TABLE_ALIGNMENT.CENTER
 
-    documento.save(fileName + '.docx')
+    documento.save(fileName)
 
     return 
