@@ -2,6 +2,7 @@ from EstacaZero import wordExport, excelExport
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import filedialog
 
 #ÍNICIANDO A INTERFACE
 
@@ -22,11 +23,6 @@ niveldAgua = tk.IntVar()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nome_msg = tk.Label(text="Nome do Arquivo: ", fg="black", bg="white", font=fonte_negrito)
-nome_msg.grid(row=0, column=0, sticky='NSEW')
-nome = tk.Entry()
-nome.grid(row=0, column=1, sticky='NSEW')
-
 listaEstacas_dict = {
     "Hélice Contínua",
     "Escavada",
@@ -39,24 +35,24 @@ listaEstacas_dict = {
 
 listaEstacas = list(listaEstacas_dict)
 tipoEstaca_msg = tk.Label(text="Tipo de Estaca: ", fg="black", bg="white", font=fonte_negrito)
-tipoEstaca_msg.grid(row=1, column=0, sticky='NSEW')
+tipoEstaca_msg.grid(row=0, column=0, sticky='NSEW')
 tipoEstaca = ttk.Combobox(estacaZero, values=listaEstacas, state="readonly")
-tipoEstaca.grid(row=1, column=1, sticky='NSEW')
+tipoEstaca.grid(row=0, column=1, sticky='NSEW')
 
 diametro_msg = tk.Label(text="Diâmetro da Estaca (cm): ", fg="black", bg="white", font=fonte_negrito)
-diametro_msg.grid(row=2, column=0, sticky='NSEW')
+diametro_msg.grid(row=1, column=0, sticky='NSEW')
 diametroEstaca = tk.Entry()
-diametroEstaca.grid(row=2, column=1, sticky='NSEW')
+diametroEstaca.grid(row=1, column=1, sticky='NSEW')
 
 cargaAdmissivel_msg = tk.Label(text="Carga Admissível Esperada (kN): ", fg="black", bg="white", font=fonte_negrito)
-cargaAdmissivel_msg.grid(row=3, column=0, sticky='NSEW')
+cargaAdmissivel_msg.grid(row=2, column=0, sticky='NSEW')
 cargaAdmissivelEsperada = tk.Entry()
-cargaAdmissivelEsperada.grid(row=3, column=1, sticky='NSEW')
+cargaAdmissivelEsperada.grid(row=2, column=1, sticky='NSEW')
 
 niveldAgua_msg = tk.Label(text="Nível de Água (m): ", fg="black", bg="white", font=fonte_negrito)
-niveldAgua_msg.grid(row=4, column=0, sticky='NSEW')
+niveldAgua_msg.grid(row=3, column=0, sticky='NSEW')
 niveldeAgua = tk.Entry()
-niveldeAgua.grid(row=4, column=1, sticky='NSEW')
+niveldeAgua.grid(row=3, column=1, sticky='NSEW')
 
 listadeSolos = [
     'Areia',
@@ -76,21 +72,21 @@ listadeSolos = [
     'Argila Siltoarenosa'
                     ]
 
-listadeSolos = list(listadeSolos)
-listaSolos_msg = tk.Label(text="Solo da Camada: ", fg="black", bg="white", font=fonte_negrito)
-listaSolos_msg.grid(row=6, column=0, sticky='NSEW')
-escolhaSolo = ttk.Combobox(estacaZero, values=listadeSolos, state="readonly")
-escolhaSolo.grid(row=6, column=1, sticky='NSEW')
-
 camadas_msg = tk.Label(text="Indique o Solo e Nspt correspondente", fg="black", bg="white", font=fonte_negrito)
 espaco_msg = tk.Label(text="", fg="black", bg="white")
-camadas_msg.grid(row=5, column=0, sticky='NSEW', columnspan=1)
-espaco_msg.grid(row=5, column=1, sticky='NSEW', columnspan=1)
+camadas_msg.grid(row=4, column=0, sticky='NSEW', columnspan=1)
+espaco_msg.grid(row=4, column=1, sticky='NSEW', columnspan=1)
+
+listadeSolos = list(listadeSolos)
+listaSolos_msg = tk.Label(text="Solo da Camada: ", fg="black", bg="white", font=fonte_negrito)
+listaSolos_msg.grid(row=5, column=0, sticky='NSEW')
+escolhaSolo = ttk.Combobox(estacaZero, values=listadeSolos, state="readonly")
+escolhaSolo.grid(row=5, column=1, sticky='NSEW')
 
 valorNspt_msg = tk.Label(text="Nspt da Camada: ", fg="black", bg="white", font=fonte_negrito)
-valorNspt_msg.grid(row=7, column=0, sticky='NSEW')
+valorNspt_msg.grid(row=6, column=0, sticky='NSEW')
 valorNspt = tk.Entry()
-valorNspt.grid(row=7, column=1, sticky='NSEW')
+valorNspt.grid(row=6, column=1, sticky='NSEW')
     
 def salvar_camada():
     global cota
@@ -128,7 +124,7 @@ def salvar_camada():
     cota = cota - 1
 
 salvarCamada = tk.Button(text="Adicionar Camada", fg='white', bg='brown', font=fonte_negrito, command=salvar_camada)
-salvarCamada.grid(row=8, column=0, columnspan=2, sticky='NSEW')
+salvarCamada.grid(row=7, column=0, columnspan=2, sticky='NSEW')
 
 def limpartudo():
     global cota
@@ -138,15 +134,14 @@ def limpartudo():
     cota = -1
 
 limparCamadas = tk.Button(text="Limpar Camadas", fg='white', bg='orange', font=fonte_negrito, command=limpartudo)
-limparCamadas.grid(row=9, column=0, columnspan=2, sticky='NSEW')
+limparCamadas.grid(row=8, column=0, columnspan=2, sticky='NSEW')
 
 dados = tk.Text(width=48, height=20)
-dados.grid(row=10, columnspan=2)
+dados.grid(row=9, columnspan=2)
 
 def gerarMemorial():
 
-    if (nome.get() == "" or
-        tipoEstaca.get() == "" or
+    if (tipoEstaca.get() == "" or
         diametroEstaca.get() == "" or
         cargaAdmissivelEsperada.get() == "" or
         niveldeAgua.get() == "" or
@@ -157,25 +152,26 @@ def gerarMemorial():
 
     else:
 
-        fileName = nome.get()
         estaca = tipoEstaca.get()
         diametro = float(diametroEstaca.get()) / 100
         cargaAdmissivel = float(cargaAdmissivelEsperada.get())
         niveldAgua = float(niveldeAgua.get())
+        fileName = filedialog.asksaveasfilename(defaultextension=".docx", filetypes=[("Word Document", "*.docx")], initialfile="Memorial Estaca Zero")
+        if not fileName:
+            return
 
         wordGerado = wordExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
 
-        messagebox.showinfo("Memorial Gerado", f"O memorial foi exportado para a mesma pasta onde o programa está localizado.\n\nNome do Arquivo: {fileName + '.docx'}")
+        messagebox.showinfo("Memorial Gerado", f"O memorial foi exportado com sucesso!")
 
     return wordGerado
 
 exportarWord = tk.Button(text="Gerar Memorial em Word", fg='white', bg='blue', font=fonte_negrito, command=gerarMemorial)
-exportarWord.grid(row=11, column=0, columnspan=2, sticky='NSEW')
+exportarWord.grid(row=10, column=0, columnspan=2, sticky='NSEW')
 
 def gerarExcel(): 
 
-    if (nome.get() == "" or
-        tipoEstaca.get() == "" or
+    if (tipoEstaca.get() == "" or
         diametroEstaca.get() == "" or
         cargaAdmissivelEsperada.get() == "" or
         niveldeAgua.get() == "" or
@@ -185,19 +181,21 @@ def gerarExcel():
 
     else:
 
-        fileName = nome.get()
         estaca = tipoEstaca.get()
         diametro = float(diametroEstaca.get()) / 100
         cargaAdmissivel = float(cargaAdmissivelEsperada.get())
         niveldAgua = float(niveldeAgua.get())
+        fileName = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel Workbook", "*.xlsx")], initialfile="Resultados Estaca Zero")
+        if not fileName:
+            return
         
         excelGerado = excelExport(listaSolos, estaca, diametro, listaNspt, cargaAdmissivel, niveldAgua, fileName)
 
-        messagebox.showinfo("Excel Gerado", f"O arquivo foi exportado para a mesma pasta onde o programa está localizado.\n\nNome do Arquivo: {fileName + '.xlsx'}")
+        messagebox.showinfo("Resultados Gerados", f"Os resultados foram exportados com sucesso!")
 
     return excelGerado
 
-exportarExcel = tk.Button(text="Exportar resultados para Excel", fg='white', bg='green', font=fonte_negrito, command=gerarExcel)
-exportarExcel.grid(row=12, column=0, columnspan=2, sticky='NSEW')
+exportarExcel = tk.Button(text="Exportar Resultados para Excel", fg='white', bg='green', font=fonte_negrito, command=gerarExcel)
+exportarExcel.grid(row=11, column=0, columnspan=2, sticky='NSEW')
 
 estacaZero.mainloop()
